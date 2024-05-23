@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Apply for SSL Certificate</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2>Fill up this input field to get SSL certificate</h2>
+    <form action="generate.php" method="post">
+        <label for="country">Country Name (2 letter code):</label><br>
+        <input type="text" id="country" name="country" required><br>
+        
+        <label for="state">State or Province Name:</label><br>
+        <input type="text" id="state" name="state" required><br>
+        
+        <label for="locality">Locality Name (eg, city):</label><br>
+        <input type="text" id="locality" name="locality" required><br>
+        
+        <label for="organization">Organization Name (eg, company):</label><br>
+        <input type="text" id="organization" name="organization" required><br>
+        
+        <label for="orgUnit">Organizational Unit Name (eg, section):</label><br>
+        <input type="text" id="orgUnit" name="orgUnit" required><br>
+        
+        <label for="commonName">Common Name (eg, your name or your server's hostname):</label><br>
+        <input type="text" id="commonName" name="commonName" required><br>
+        
+        <label for="email">Email Address:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <input type="submit" name="generate" value="Generate SSL Certificate">
+    </form>
+    <form action="payment.php" method="get">
+        <input type="submit" value="Make Payment">
+    </form>
+</body>
+</html>

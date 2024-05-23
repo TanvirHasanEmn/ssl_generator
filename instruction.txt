@@ -1,0 +1,84 @@
+1.Setting Up the Web Pages:
+First, ensure you have Apache and PHP installed on your Ubuntu server.
+
+sudo apt update
+sudo apt install apache2 php libapache2-mod-php
+
+sudo apt install openssl
+sudo apt install php-openssl
+
+
+
+2.Creating the HTML Forms:
+apply.ewubdca.com (for CSR submission and mock payment):
+
+Create a directory for your application:
+
+sudo mkdir /var/www/apply.ewubdca.com
+sudo mkdir /var/www/download.ewubdca.com
+
+
+3.Create an HTML form in /var/www/apply.ewubdca.com/index.html:
+ Save the CSS file as styles.css in the respective directories (/var/www/apply.ewubdca.com and /var/www/download.ewubdca.com).
+/var/www/apply.ewubdca.com/info.php
+
+4.download.ewubdca.com (for downloading the certificates):
+
+Create an HTML page in /var/www/download.ewubdca.com/index.html(rename downindex.php to index.php
+
+
+
+5. Creating the PHP Backend:
+generate.php in /var/www/apply.ewubdca.com/generate.php:
+
+
+6. payment.php in /var/www/apply.ewubdca.com/payment.php:
+
+7.Configuring Apache:
+Create virtual hosts for apply.ewubdca.com and download.ewubdca.com:
+sudo nano /etc/apache2/sites-available/apply.ewubdca.com.conf
+code:
+<VirtualHost *:443>
+    ServerAdmin webmaster@localhost
+    ServerName apply.ewubdca.com
+    DocumentRoot /var/www/apply.ewubdca.com
+
+    SSLEngine on
+    SSLCertificateFile /etc/apache2/ssl/apache-selfsigned.crt
+    SSLCertificateKeyFile /etc/apache2/ssl/apache-selfsigned.key
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+
+
+
+sudo nano /etc/apache2/sites-available/download.ewubdca.com.conf
+code:
+<VirtualHost *:443>
+    ServerAdmin webmaster@localhost
+    ServerName download.ewubdca.com
+    DocumentRoot /var/www/download.ewubdca.com
+
+    SSLEngine on
+    SSLCertificateFile [path to your chained.crt]
+    SSLCertificateKeyFile [path to your server.key]
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+
+8.Enable the new sites and restart Apache:
+sudo a2ensite apply.ewubdca.com.conf
+sudo a2ensite download.ewubdca.com.conf
+sudo systemctl restart apache2
+
+This setup should allow you to create a web page where users can submit their CSR details, generate SSL certificates, and download the signed certificates with instructions. Ensure you handle the files securely and consider adding validation and security checks as needed for a production environment.
+
+9.If you encounter any issues, check the Apache logs for more information:
+sudo tail -f /var/log/apache2/error.log
+
+10. To enable the extension, open your php.ini file and ensure the following line is uncommented:
+extension=openssl
